@@ -1,38 +1,70 @@
-Role Name
-=========
+# Configure PortSecurity
 
-A brief description of the role goes here.
+Demo role to configure basic port-security as well as generate a compliance report for portsec on a Cisco Catalyst switch.
 
-Requirements
-------------
+## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- cisco.ios
+- ansible.netcommon
 
-Role Variables
---------------
+## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- **portsecurity_interfaces**: List of interface names in short and long format to configure port-security.
 
-Dependencies
-------------
+  **Example**:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+  ```yaml
+  portsecurity_interfaces:
+    - long: "GigabitEthernet1/0/17"
+      short: "Gi1/0/17"
+    - long: "GigabitEthernet1/0/18"
+      short: "Gi1/0/18"
+  ```
 
-Example Playbook
-----------------
+  Cisco PyATS parser for portsec uses the abbreviated (Gi1/0/1) as opposed to the full name (GigabitEthernet1/0/1). The ios_config module requires full interface name for idempotency so both are listed
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Configuration Template
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+The example template for port-security configuration is found under roles/configure_portsecurity/templates/ios_portsec.j2. Modify as needed to match your configuration.
 
-License
--------
+## Example Playbook
 
-BSD
+**Configure PortSec**:
 
-Author Information
-------------------
+```yaml
+- hosts: all
+  gather_facts: false
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+  vars:
+    portsecurity_interfaces:
+      - long: "GigabitEthernet1/0/17"
+        short: "Gi1/0/17"
+      - long: "GigabitEthernet1/0/18"
+        short: "Gi1/0/18"
+
+  tasks:
+    - name: Configure Port Security
+      include_role:
+      name: config_portsecurity
+      tasks_from: ios_portsec_configure
+```
+
+Generate PortSec Report:
+
+```yaml
+- hosts: all
+  gather_facts: false
+
+  vars:
+    portsecurity_interfaces:
+      - long: "GigabitEthernet1/0/17"
+        short: "Gi1/0/17"
+      - long: "GigabitEthernet1/0/18"
+        short: "Gi1/0/18"
+
+  tasks:
+    - name: Run Port Security Report
+      include_role:
+        name: config_portsecurity
+        tasks_from: ios_portsec_report
+```
