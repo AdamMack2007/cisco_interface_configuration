@@ -1,0 +1,6 @@
+{% for interface in portsecurity_interfaces -%} {# portsecurity_interfaces is found in group_vars/all.yml #}
+interface {{ interface.long }}
+  switchport mode access
+  switchport port-security maximum 2
+  switchport port-security
+{% endfor -%}

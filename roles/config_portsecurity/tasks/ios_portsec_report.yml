@@ -1,0 +1,29 @@
+- name: Parse IOS Port Security Stats
+  ansible.netcommon.cli_parse:
+    command: show port-security
+    parser:
+      name: ansible.netcommon.pyats
+    set_fact: portsecurity
+
+- name: Get Port Security Interfaces as list
+  set_fact:
+    portsec_list: "{{ portsecurity.interfaces.keys()|list }}"
+
+- name: Check interface compliance
+  block:
+    - name: Check that Interfaces are correct
+      assert:
+        that:
+          - item.short in portsec_list
+        success_msg: "Interface {{ item.short }} is compliant"
+      loop: "{{ portsecurity_interfaces }}"
+      loop_control:
+        label: "{{ item.short }}"
+  rescue:
+    - name: Send Mattermost Message
+      mattermost:
+        url: "{{ mattermost_url }}"
+        api_key: "{{ mattermost_token }}"
+        channel: "{{ mattermost_channel }}"
+        text: "{{ lookup('template','ios_portsec_report.j2') }}"
+        validate_certs: false

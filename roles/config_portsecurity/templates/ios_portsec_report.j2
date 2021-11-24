@@ -1,0 +1,11 @@
+### {{ inventory_hostname }}
+
+|     Interface      | PortSec Status |  Addresses Learned/Allowed |  Violations |  
+| :----------------: | :------------: | :------------------------: | :----------:|
+{% for interface in portsecurity_interfaces %} {# portsecurity_interfaces is found in group_vars/all.yml #}
+{% if interface.short in portsec_list %}
+| {{ interface.short }} | :white_check_mark: | {{ portsecurity['interfaces'][interface.short]['current_addr_cnt'] }}/{{ portsecurity['interfaces'][interface.short]['max_secure_addr_cnt'] }} | {{ portsecurity['interfaces'][interface.short]['security_violation_cnt'] }} | 
+{% else %}
+| {{ interface.short }} | :no_entry: | | | |
+{% endif %}
+{% endfor %}

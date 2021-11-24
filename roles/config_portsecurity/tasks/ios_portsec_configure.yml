@@ -1,0 +1,4 @@
+---
+- name: Configure Port Security
+  ios_config:
+    src: ios_portsec.j2

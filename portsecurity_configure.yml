@@ -1,0 +1,8 @@
+- hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Configure Port Security
+      include_role:
+        name: config_portsecurity
+        tasks_from: ios_portsec_configure

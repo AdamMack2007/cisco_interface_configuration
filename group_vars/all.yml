@@ -1,0 +1,8 @@
+#Cisco PortSec parser pulls abbreviated int names, ios_config requires full for idempotency
+#Long is for ios_config, short is for report role
+
+portsecurity_interfaces:
+  - long: "GigabitEthernet1/0/17"
+    short: "Gi1/0/17"
+  - long: "GigabitEthernet1/0/18"
+    short: "Gi1/0/18"
