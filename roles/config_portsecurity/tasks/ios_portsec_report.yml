@@ -27,3 +27,5 @@
         channel: "{{ mattermost_channel }}"
         text: "{{ lookup('template','ios_portsec_report.j2') }}"
         validate_certs: false
+      when:
+        - mattermost_url is defined
