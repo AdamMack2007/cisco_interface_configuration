@@ -68,3 +68,7 @@ The example template for port-security configuration is found under roles/config
         name: config_portsecurity
         tasks_from: ios_portsec_report
 ```
+
+## Example Report
+
+![](files/example_report.png)
