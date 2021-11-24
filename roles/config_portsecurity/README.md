@@ -49,7 +49,7 @@ The example template for port-security configuration is found under roles/config
       tasks_from: ios_portsec_configure
 ```
 
-Generate PortSec Report:
+**Generate PortSec Report**:
 
 ```yaml
 - hosts: all
