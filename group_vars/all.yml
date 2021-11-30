@@ -11,3 +11,5 @@ dot1x_interfaces:
   - GigabitEthernet1/0/20
   - GigabitEthernet1/0/21
   - GigabitEthernet1/0/22
+
+mattermost_channel: "device-info"
