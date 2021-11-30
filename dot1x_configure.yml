@@ -1,0 +1,8 @@
+- hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Configure Dot1x
+      include_role:
+        name: config_dot1x
+        tasks_from: ios_dot1x_configure

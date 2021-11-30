@@ -6,3 +6,11 @@ portsecurity_interfaces:
     short: "Gi1/0/17"
   - long: "GigabitEthernet1/0/18"
     short: "Gi1/0/18"
+
+dot1x_interfaces:
+  - long: "GigabitEthernet1/0/20"
+    short: "Gi1/0/20"
+  - long: "GigabitEthernet1/0/21"
+    short: "Gi1/0/21"
+  - long: "GigabitEthernet1/0/22"
+    short: "Gi1/0/22"

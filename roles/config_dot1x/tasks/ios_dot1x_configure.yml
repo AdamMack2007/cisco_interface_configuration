@@ -1,0 +1,4 @@
+---
+- name: Configure dot1x
+  cisco.ios.ios_config:
+    src: ios_dot1x.j2

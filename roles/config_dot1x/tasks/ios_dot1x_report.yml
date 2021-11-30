@@ -1,0 +1,16 @@
+- name: Check dot1x compliance
+  cisco.ios.ios_config:
+    src: ios_dot1x.j2
+  check_mode: yes
+  register: dot1x_check
+
+- name: Send Mattermost Message
+  mattermost:
+    url: "{{ mattermost_url }}"
+    api_key: "{{ mattermost_token }}"
+    channel: "{{ mattermost_channel }}"
+    text: "{{ lookup('template','ios_dot1x_report.j2') }}"
+    validate_certs: false
+  when:
+    - mattermost_url is defined
+    - dot1x_check.changed
