@@ -1,5 +1,5 @@
 {% for interface in dot1x_interfaces -%} {# dot1x_interfaces is found in group_vars/all.yml #}
-interface {{ interface.long }}
+interface {{ interface }}
  description DOT1X VOIP
  switchport access vlan 999
  switchport mode access
