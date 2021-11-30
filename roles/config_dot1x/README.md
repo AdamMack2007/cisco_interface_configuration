@@ -1,38 +1,66 @@
-Role Name
-=========
+# Configure Dot1x
 
-A brief description of the role goes here.
+Demo role to configure dot1x on Cisco switches as well as generate a compliance report for dot1x.
 
-Requirements
-------------
+## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- cisco.ios
+- ansible.utils
 
-Role Variables
---------------
+## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- **dot1x_interfaces**: List of interface names to configure dot1x.
 
-Dependencies
-------------
+  **Example**:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+  ```yaml
+  dot1x_interfaces:
+    - GigabitEthernet1/0/17
+    - GigabitEthernet1/0/18
+  ```
 
-Example Playbook
-----------------
+## Configuration Template
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The example template for dot1x configuration is found under roles/configure_dot1x/templates/ios_dot1x.j2. Modify as needed to match your configuration.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Example Playbook
 
-License
--------
+**Configure Dot1x**:
 
-BSD
+```yaml
+- hosts: all
+  gather_facts: false
 
-Author Information
-------------------
+  vars:
+    dot1x_interfaces:
+      - GigabitEthernet1/0/17
+      - GigabitEthernet1/0/18
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+  tasks:
+    - name: Configure Dot1x
+      include_role:
+      name: config_dot1x
+      tasks_from: ios_dot1x_configure
+```
+
+**Generate PortSec Report**:
+
+```yaml
+- hosts: all
+  gather_facts: false
+
+  vars:
+    dot1x_interfaces:
+      - GigabitEthernet1/0/17
+      - GigabitEthernet1/0/18
+
+  tasks:
+    - name: Dot1x Report
+      include_role:
+      name: config_dot1x
+      tasks_from: ios_dot1x_report
+```
+
+## Example Report
+
+![](files/example_report.png)
