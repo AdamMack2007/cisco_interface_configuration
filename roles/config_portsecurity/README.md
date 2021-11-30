@@ -5,7 +5,7 @@ Demo role to configure basic port-security as well as generate a compliance repo
 ## Requirements
 
 - cisco.ios
-- ansible.netcommon
+- ansible.utils
 
 ## Role Variables
 
