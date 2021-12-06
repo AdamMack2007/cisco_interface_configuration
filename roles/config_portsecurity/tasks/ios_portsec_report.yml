@@ -1,8 +1,8 @@
 - name: Parse IOS Port Security Stats
-  ansible.utils.cli_parse:
+  ansible.netcommon.cli_parse:
     command: show port-security
     parser:
-      name: ansible.utils.pyats
+      name: ansible.netcommon.pyats
     set_fact: portsecurity
 
 - name: Get Port Security Interfaces as list
