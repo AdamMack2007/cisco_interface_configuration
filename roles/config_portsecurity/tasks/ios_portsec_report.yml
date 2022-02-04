@@ -21,7 +21,7 @@
         label: "{{ item.short }}"
   rescue:
     - name: Send Mattermost Message
-      mattermost:
+      community.general.mattermost:
         url: "{{ mattermost_url }}"
         api_key: "{{ mattermost_token }}"
         channel: "{{ mattermost_channel }}"

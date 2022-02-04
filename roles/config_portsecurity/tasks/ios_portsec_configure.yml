@@ -1,4 +1,4 @@
 ---
 - name: Configure Port Security
-  ios_config:
+  cisco.ios.ios_config:
     src: ios_portsec.j2
